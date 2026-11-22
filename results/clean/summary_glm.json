@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "id": "z-ai/glm-5.3-flash",
+    "name": "GLM 5.3 Flash",
+    "short": "glm",
+    "label": "GLM 5.3 Flash",
+    "provider": "Zhipu AI (Cloud API)",
+    "architecture": "Dense Frontier",
+    "rq2": "rq2_batch_ablation_z-ai_glm-5_3-flash_20261101_155812.json",
+    "rq3": "rq3_four_axes_z-ai_glm-5_3-flash_20261101_162944.json"
+  },
+  "rq2_batching": {
+    "elicitation_propensity_pct": {
+      "S0_neutral": 0.0,
+      "S1_transactional": 30.0,
+      "S2_ratelimit": 10.0,
+      "S3_fewshot_parallel": 50.0
+    },
+    "syntactic_order_asr": {
+      "W1_forward_linear_asr": 0.0,
+      "W2_reverse_linear_asr": 25.0,
+      "W3_clean_turn1_parallel_asr": 0.0,
+      "ttcgateway_causal_asr": 0.0
+    }
+  },
+  "rq3_e1_hurdle_matrix": {
+    "replan_1_rate_pct": {
+      "visible_403": 35.0,
+      "visible_200": 60.0,
+      "mtm_masked": 95.0
+    },
+    "token_breakdown_median": {
+      "visible_403": {
+        "uncached_input": 907.0,
+        "cached_input": 32.0,
+        "output_reasoning": 213.0,
+        "total": 1602.5
+      },
+      "mtm_masked": {
+        "uncached_input": 772.5,
+        "cached_input": 0.0,
+        "output_reasoning": 118.0,
+        "total": 915.5
+      }
+    },
+    "token_breakdown_mean": {
+      "visible_403": {
+        "uncached_input": 1299.45,
+        "cached_input": 355.2,
+        "output_reasoning": 237.3,
+        "total": 1891.95
+      },
+      "visible_200": {
+        "uncached_input": 1069.2,
+        "cached_input": 265.6,
+        "output_reasoning": 171.55,
+        "total": 1506.35
+      },
+      "mtm_masked": {
+        "uncached_input": 734.2,
+        "cached_input": 60.8,
+        "output_reasoning": 154.95,
+        "total": 949.95
+      }
+    }
+  },
+  "rq3_e2_attention_inertia_ghost_calls": {
+    "k1": 0.0,
+    "k2": 0.0,
+    "k4": 0.0,
+    "k5": 0.0,
+    "k8": 0.0,
+    "k10": 0.0
+  },
+  "rq3_e2_replan_1_rate_pct": {
+    "k1": 85.0,
+    "k2": 95.0,
+    "k4": 100.0,
+    "k5": 85.0,
+    "k8": 100.0,
+    "k10": 100.0
+  },
+  "rq3_e3_fallback_action_space": {
+    "F1_staging": {
+      "safe_staging_pct": 90.0,
+      "nearmiss_synonym_pct": 0.0,
+      "plain_text_abstention_pct": 5.0,
+      "ghost_calls_intercepted_pct": 0.0
+    },
+    "F2_nearmiss": {
+      "safe_staging_pct": 0.0,
+      "nearmiss_synonym_pct": 45.0,
+      "plain_text_abstention_pct": 50.0,
+      "ghost_calls_intercepted_pct": 0.0
+    },
+    "F3_nofallback": {
+      "safe_staging_pct": 0.0,
+      "nearmiss_synonym_pct": 0.0,
+      "plain_text_abstention_pct": 65.0,
+      "ghost_calls_intercepted_pct": 0.0
+    }
+  },
+  "rq3_e4_finops_breakeven": {
+    "k1": {
+      "cost_mtm_usd_per_1k": 0.09,
+      "cost_403_usd_per_1k": 0.16,
+      "net_savings_delta_usd_per_1k": 0.07,
+      "catalog_cost_mtm_usd_per_1k": 0.06,
+      "catalog_cost_403_usd_per_1k": 0.1,
+      "catalog_net_savings_delta_usd_per_1k": 0.04,
+      "delta_uncached_tokens": 205.2,
+      "delta_cached_tokens": 445.0,
+      "delta_output_tokens": 81.7
+    },
+    "k2": {
+      "cost_mtm_usd_per_1k": 0.12,
+      "cost_403_usd_per_1k": 0.18,
+      "net_savings_delta_usd_per_1k": 0.06,
+      "catalog_cost_mtm_usd_per_1k": 0.08,
+      "catalog_cost_403_usd_per_1k": 0.12,
+      "catalog_net_savings_delta_usd_per_1k": 0.04,
+      "delta_uncached_tokens": 135.0,
+      "delta_cached_tokens": 518.4,
+      "delta_output_tokens": 79.7
+    },
+    "k4": {
+      "cost_mtm_usd_per_1k": 0.13,
+      "cost_403_usd_per_1k": 0.17,
+      "net_savings_delta_usd_per_1k": 0.04,
+      "catalog_cost_mtm_usd_per_1k": 0.09,
+      "catalog_cost_403_usd_per_1k": 0.11,
+      "catalog_net_savings_delta_usd_per_1k": 0.02,
+      "delta_uncached_tokens": -52.6,
+      "delta_cached_tokens": 928.0,
+      "delta_output_tokens": 67.9
+    },
+    "k5": {
+      "cost_mtm_usd_per_1k": 0.16,
+      "cost_403_usd_per_1k": 0.17,
+      "net_savings_delta_usd_per_1k": 0.01,
+      "catalog_cost_mtm_usd_per_1k": 0.11,
+      "catalog_cost_403_usd_per_1k": 0.11,
+      "catalog_net_savings_delta_usd_per_1k": 0.0,
+      "delta_uncached_tokens": -319.1,
+      "delta_cached_tokens": 915.2,
+      "delta_output_tokens": 54.9
+    },
+    "k8": {
+      "cost_mtm_usd_per_1k": 0.2,
+      "cost_403_usd_per_1k": 0.21,
+      "net_savings_delta_usd_per_1k": 0.01,
+      "catalog_cost_mtm_usd_per_1k": 0.14,
+      "catalog_cost_403_usd_per_1k": 0.13,
+      "catalog_net_savings_delta_usd_per_1k": -0.01,
+      "delta_uncached_tokens": -769.2,
+      "delta_cached_tokens": 1893.8,
+      "delta_output_tokens": 82.4
+    },
+    "k10": {
+      "cost_mtm_usd_per_1k": 0.25,
+      "cost_403_usd_per_1k": 0.27,
+      "net_savings_delta_usd_per_1k": 0.02,
+      "catalog_cost_mtm_usd_per_1k": 0.17,
+      "catalog_cost_403_usd_per_1k": 0.18,
+      "catalog_net_savings_delta_usd_per_1k": 0.01,
+      "delta_uncached_tokens": -638.6,
+      "delta_cached_tokens": 2316.4,
+      "delta_output_tokens": 71.5
+    }
+  }
+}

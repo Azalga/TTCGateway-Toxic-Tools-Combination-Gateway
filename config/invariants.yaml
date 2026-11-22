@@ -1,0 +1,55 @@
+# ==============================================================================
+# TTCGateway - Declarative Toxic Tool Combination (TTC) Invariants
+# ==============================================================================
+# Defines the forbidden combinations of conversational state and tool capabilities.
+# Each invariant specifies:
+#   - session_requires: The FSM state bit conditions that must be present (e.g. TAINTED, CONFIDENTIAL).
+#   - deny_primitives: Tool primitive tags that are pruned (P=0) when the state condition is met.
+#   - enabled: Whether this invariant is active by default.
+
+invariants:
+  # 1. Classical Exfiltration Trifecta (Simon Willison Archetype)
+  # Risk: Attacker coerces agent into exfiltrating confidential data to external servers.
+  lethal_trifecta:
+    name: "Lethal Trifecta (Data Exfiltration)"
+    description: "Blocks external network egress when context holds both untrusted input and confidential secrets."
+    enabled: true
+    session_requires: ["TAINTED", "CONFIDENTIAL"]
+    deny_primitives: ["egress:outside"]
+
+  # 2. Sabotage & Data Destruction Dyad
+  # Risk: Attacker injects malicious instructions to delete databases, drop tables, or wipe mailboxes.
+  # Note: Does NOT require reading secrets! Tainted input alone triggers sabotage prevention.
+  sabotage_dyad:
+    name: "Sabotage & Data Destruction"
+    description: "Blocks destructive mutations and deletion tools when context is tainted by external data."
+    enabled: true
+    session_requires: ["TAINTED"]
+    deny_primitives: ["write:destructive", "write:persistent_memory", "delete:*"]
+
+  # 3. Privilege Escalation & IAM Hijack Dyad
+  # Risk: Attacker coerces agent to grant admin roles, generate persistent API keys, or alter security policies.
+  privilege_escalation:
+    name: "Privilege Escalation & IAM Hijack"
+    description: "Blocks IAM permission grants and credentials generation when context is tainted."
+    enabled: true
+    session_requires: ["TAINTED"]
+    deny_primitives: ["iam:grant", "auth:create_key"]
+
+  # 4. Financial & Billing Drain Dyad
+  # Risk: Attacker coerces agent to initiate unauthorized funds transfers or order external paid services.
+  financial_drain:
+    name: "Financial & Billing Drain"
+    description: "Blocks financial transfers, billing charges, and credit operations when context is tainted."
+    enabled: true
+    session_requires: ["TAINTED"]
+    deny_primitives: ["exec:financial", "billing:charge"]
+
+  # 5. Remote Code Execution (RCE) / Shell Dyad
+  # Risk: Attacker coerces agent to execute arbitrary shell/bash commands or unconfined scripts.
+  arbitrary_code_execution:
+    name: "Arbitrary Code Execution (RCE)"
+    description: "Blocks shell execution and code interpreters when context is tainted."
+    enabled: true
+    session_requires: ["TAINTED"]
+    deny_primitives: ["exec:code", "exec:shell"]

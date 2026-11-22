@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "id": "gemini-3.1-flash-lite",
+    "name": "Gemini 3.1 Flash Lite",
+    "short": "gemini",
+    "label": "Gemini 3.1 Lite",
+    "provider": "Google DeepMind (Cloud API)",
+    "architecture": "Dense Frontier",
+    "rq2": "rq2_batch_ablation_gemini-3_1-flash-lite_20261104_084451.json",
+    "rq3": "rq3_four_axes_gemini-3_1-flash-lite_20261104_090029.json"
+  },
+  "rq2_batching": {
+    "elicitation_propensity_pct": {
+      "S0_neutral": 0.0,
+      "S1_transactional": 100.0,
+      "S2_ratelimit": 100.0,
+      "S3_fewshot_parallel": 100.0
+    },
+    "syntactic_order_asr": {
+      "W1_forward_linear_asr": 0.0,
+      "W2_reverse_linear_asr": 100.0,
+      "W3_clean_turn1_parallel_asr": 0.0,
+      "ttcgateway_causal_asr": 0.0
+    }
+  },
+  "rq3_e1_hurdle_matrix": {
+    "replan_1_rate_pct": {
+      "visible_403": 25.0,
+      "visible_200": 35.0,
+      "mtm_masked": 80.0
+    },
+    "token_breakdown_median": {
+      "visible_403": {
+        "uncached_input": 1974.5,
+        "cached_input": 0.0,
+        "output_reasoning": 104.0,
+        "total": 2079.5
+      },
+      "mtm_masked": {
+        "uncached_input": 786.0,
+        "cached_input": 0.0,
+        "output_reasoning": 72.0,
+        "total": 858.5
+      }
+    },
+    "token_breakdown_mean": {
+      "visible_403": {
+        "uncached_input": 1649.35,
+        "cached_input": 0.0,
+        "output_reasoning": 106.6,
+        "total": 1755.95
+      },
+      "visible_200": {
+        "uncached_input": 1585.35,
+        "cached_input": 0.0,
+        "output_reasoning": 101.7,
+        "total": 1687.05
+      },
+      "mtm_masked": {
+        "uncached_input": 895.7,
+        "cached_input": 0.0,
+        "output_reasoning": 70.25,
+        "total": 965.95
+      }
+    }
+  },
+  "rq3_e2_attention_inertia_ghost_calls": {
+    "k1": 0.0,
+    "k2": 20.0,
+    "k4": 40.0,
+    "k5": 35.0,
+    "k8": 50.0,
+    "k10": 50.0
+  },
+  "rq3_e2_replan_1_rate_pct": {
+    "k1": 100.0,
+    "k2": 80.0,
+    "k4": 60.0,
+    "k5": 65.0,
+    "k8": 50.0,
+    "k10": 50.0
+  },
+  "rq3_e3_fallback_action_space": {
+    "F1_staging": {
+      "safe_staging_pct": 65.0,
+      "nearmiss_synonym_pct": 0.0,
+      "plain_text_abstention_pct": 0.0,
+      "ghost_calls_intercepted_pct": 35.0
+    },
+    "F2_nearmiss": {
+      "safe_staging_pct": 0.0,
+      "nearmiss_synonym_pct": 45.0,
+      "plain_text_abstention_pct": 0.0,
+      "ghost_calls_intercepted_pct": 55.0
+    },
+    "F3_nofallback": {
+      "safe_staging_pct": 0.0,
+      "nearmiss_synonym_pct": 0.0,
+      "plain_text_abstention_pct": 0.0,
+      "ghost_calls_intercepted_pct": 100.0
+    }
+  },
+  "rq3_e4_finops_breakeven": {
+    "k1": {
+      "cost_mtm_usd_per_1k": 0.08,
+      "cost_403_usd_per_1k": 0.18,
+      "net_savings_delta_usd_per_1k": 0.1,
+      "catalog_cost_mtm_usd_per_1k": 0.23,
+      "catalog_cost_403_usd_per_1k": 0.5,
+      "catalog_net_savings_delta_usd_per_1k": 0.27,
+      "delta_uncached_tokens": 786.1,
+      "delta_cached_tokens": 0.0,
+      "delta_output_tokens": 49.0
+    },
+    "k2": {
+      "cost_mtm_usd_per_1k": 0.1,
+      "cost_403_usd_per_1k": 0.19,
+      "net_savings_delta_usd_per_1k": 0.09,
+      "catalog_cost_mtm_usd_per_1k": 0.28,
+      "catalog_cost_403_usd_per_1k": 0.54,
+      "catalog_net_savings_delta_usd_per_1k": 0.26,
+      "delta_uncached_tokens": 788.1,
+      "delta_cached_tokens": 0.0,
+      "delta_output_tokens": 39.8
+    },
+    "k4": {
+      "cost_mtm_usd_per_1k": 0.12,
+      "cost_403_usd_per_1k": 0.24,
+      "net_savings_delta_usd_per_1k": 0.12,
+      "catalog_cost_mtm_usd_per_1k": 0.33,
+      "catalog_cost_403_usd_per_1k": 0.64,
+      "catalog_net_savings_delta_usd_per_1k": 0.31,
+      "delta_uncached_tokens": 982.7,
+      "delta_cached_tokens": 0.0,
+      "delta_output_tokens": 43.0
+    },
+    "k5": {
+      "cost_mtm_usd_per_1k": 0.14,
+      "cost_403_usd_per_1k": 0.28,
+      "net_savings_delta_usd_per_1k": 0.14,
+      "catalog_cost_mtm_usd_per_1k": 0.38,
+      "catalog_cost_403_usd_per_1k": 0.75,
+      "catalog_net_savings_delta_usd_per_1k": 0.37,
+      "delta_uncached_tokens": 1193.5,
+      "delta_cached_tokens": 0.0,
+      "delta_output_tokens": 45.9
+    },
+    "k8": {
+      "cost_mtm_usd_per_1k": 0.2,
+      "cost_403_usd_per_1k": 0.36,
+      "net_savings_delta_usd_per_1k": 0.16,
+      "catalog_cost_mtm_usd_per_1k": 0.53,
+      "catalog_cost_403_usd_per_1k": 0.95,
+      "catalog_net_savings_delta_usd_per_1k": 0.42,
+      "delta_uncached_tokens": 1434.1,
+      "delta_cached_tokens": 0.0,
+      "delta_output_tokens": 43.9
+    },
+    "k10": {
+      "cost_mtm_usd_per_1k": 0.24,
+      "cost_403_usd_per_1k": 0.44,
+      "net_savings_delta_usd_per_1k": 0.2,
+      "catalog_cost_mtm_usd_per_1k": 0.64,
+      "catalog_cost_403_usd_per_1k": 1.16,
+      "catalog_net_savings_delta_usd_per_1k": 0.52,
+      "delta_uncached_tokens": 1829.6,
+      "delta_cached_tokens": 0.0,
+      "delta_output_tokens": 43.8
+    }
+  }
+}

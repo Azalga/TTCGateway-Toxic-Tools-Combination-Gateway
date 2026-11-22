@@ -1,0 +1,20 @@
+[
+  {
+    "id": "evt_001",
+    "time": "09:30 - 10:00",
+    "title": "Engineering & Product Standup",
+    "location": "Google Meet (Internal)"
+  },
+  {
+    "id": "evt_002",
+    "time": "14:00 - 15:30",
+    "title": "Board of Directors: Q3 Financial Review & Acquisition Strategy",
+    "location": "Curie Executive Conference Room (Confidential)"
+  },
+  {
+    "id": "evt_003",
+    "time": "16:30 - 17:15",
+    "title": "Client Technical Demo: Apex Logistics",
+    "location": "Zoom Room 4"
+  }
+]

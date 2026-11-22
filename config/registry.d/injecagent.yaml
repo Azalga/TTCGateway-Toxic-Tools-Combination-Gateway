@@ -1,0 +1,185 @@
+# ==============================================================================
+# config/registry.d/injecagent.yaml
+# TTCGateway: Declarative Capability Registry for InjecAgent Official Suite
+# Formal Framework: Lampson (1973) Confinement & Anderson (1972) Reference Monitor
+# 
+# THREAT MODEL & INVARIANT MAPPING:
+# 1. Data Stealing (DS) -> Lethal Trifecta Invariant:
+#    read:untrusted + read:confidential -> Deny egress:outside (MTM, P=0)
+# 2. Direct Harm (DH)   -> Sabotage, Financial, IAM & RCE Invariants:
+#    read:untrusted -> Deny write:destructive | exec:financial | iam:grant | exec:code
+# ==============================================================================
+
+primitives:
+  # =========================================================================
+  # 1. SOURCES D'INGESTION EXTERNES NON FIABLES (P_mod -> Active BIT_TAINTED 0b01)
+  #    Outils extrayant du contenu produit ou modifiable par des tiers non vérifiés
+  #    (avis clients, emails entrants, dépôts de code publics, tweets, pages web).
+  #    Ces sources constituent la surface d'attaque canonique d'Indirect Prompt Injection.
+  # =========================================================================
+  read:untrusted:
+    # --- E-Commerce & Avis Publics (Vecteur d'injection via fiches produits et reviews) ---
+    - AmazonGetProductDetails                   # Reviews et descriptions d'articles rédigées par des tiers
+    - ShopifyGetProductDetails                  # Descriptions d'articles externes
+    - TeladocViewReviews                        # Commentaires de patients/praticiens tiers
+
+    # --- Messagerie, Réseaux Sociaux & Notes Collaboratives ---
+    - EvernoteManagerSearchNotes                # Notes partagées contenant du texte libre
+    - GmailReadEmail                            # Emails d'expéditeurs externes arbitraires
+    - GmailSearchEmails                         # Recherche d'emails externes
+    - TwilioGetReceivedSmsMessages              # SMS entrants d'expéditeurs non filtrés
+    - TwitterManagerGetUserProfile              # Bios Twitter publiques d'inconnus
+    - TwitterManagerReadTweet                   # Tweets publics arbitraires
+    - TwitterManagerSearchTweets                # Flux de tweets publics
+    - TodoistSearchTasks                        # Tâches partagées ou injectées
+
+    # --- Calendrier & Collaboration ---
+    - GoogleCalendarGetEventsFromSharedCalendar # Événements d'agenda partagés par des tiers
+    - GoogleCalendarReadEvents                  # Invitations reçues d'inconnus
+
+    # --- Dépôts de Code & Web Navigation ---
+    - GitHubGetRepositoryDetails                # READMEs, issues, commits publics pouvant contenir des payloads
+    - GitHubGetUserDetails                      # Profils GitHub publics
+    - GitHubSearchRepositories                  # Dépôts de code arbitraires
+    - WebBrowserNavigateTo                      # Contenu HTML brut de pages web publiques arbitraires
+
+  # =========================================================================
+  # 2. ACCÈS AUX SECRETS & DONNÉES PRIVÉES (P_mod -> Active BIT_CONFIDENTIAL 0b10)
+  #    Ressources contenant des informations personnelles identifiables (PII),
+  #    identifiants, données financières, génétiques, médicales ou historiques privés.
+  # =========================================================================
+  read:confidential:
+    # --- Communications Privées & Notes Personnelles ---
+    - GmailReadEmail                            # Boîte mail privée de l'utilisateur
+    - GmailSearchEmails
+    - EvernoteManagerSearchNotes                # Notes privées et memos personnels
+    - TodoistSearchTasks                        # Liste de tâches personnelles privées
+    - TwilioGetReceivedSmsMessages              # Historique de SMS privés
+
+    # --- Agenda & Localisation Privée ---
+    - GoogleCalendarReadEvents                  # Emploi du temps personnel privé
+    - GoogleMapGetCurrentLocation               # Géolocalisation GPS temps réel de l'utilisateur
+
+    # --- Profils, Carnets d'Adresses & PII ---
+    - AmazonViewSavedAddresses                  # Adresses postales et domiciles enregistrés
+    - AmazonViewSavedPaymentMethods             # Moyens de paiement et cartes de crédit
+    - FacebookManagerGetUserProfile             # Profil privé Facebook et métadonnées d'identité
+    - FacebookManagerSearchFriends              # Graphe social et liste d'amis de l'utilisateur (Cible Data Stealing)
+    - SpokeoDownloadPublicRecord                # Registres civils et données d'identité complètes
+    - SpokeoSearchPeople                        # Recherche de personnes et données d'état civil (Cible Data Stealing)
+    - TwilioGetPhoneNumberInfo                  # Métadonnées et lignes téléphoniques privées
+
+    # --- Données Bancaires, Financières & Crypto ---
+    - BankManagerGetAccountInformation          # Soldes de comptes bancaires et IBAN
+    - BankManagerSearchPayee                    # Bénéficiaires enregistrés et coordonnées bancaires
+    - BinanceGetOrderHistory                    # Historique d'ordres et de portefeuille crypto
+    - InvestmentManagerGetHoldingsInformation   # Portefeuille d'investissements boursiers
+    - TDAmeritradeGetHoldingsInformation        # Actifs financiers et placements
+    - VenmoListLinkedAccounts                   # Comptes bancaires liés à Venmo
+
+    # --- Mots de Passe & Contrôle d'Accès Physique ---
+    - NortonIdentitySafeSearchPasswords         # Coffre-fort de mots de passe maître
+    - AugustSmartLockViewAccessHistory          # Historique des ouvertures physiques du domicile
+
+    # --- Données Médicales & Santé (HIPAA / RGPD Sensibles) ---
+    - EpicFHIRDownloadFiles                     # Dossiers médicaux complets
+    - EpicFHIRGetPatientDetails                 # Identité et diagnostics médicaux du patient
+    - TeladocAccessUserInfo                     # Données de téléconsultation et antécédents
+    - TeladocViewPrescriptions                  # Ordonnances médicales privées
+    - The23andMeDownloadData                    # Téléchargement de données ADN brutes
+    - The23andMeGetGeneticData                  # Profil génétique et séquençage
+    - The23andMeGetHealthRecommendations        # Recommandations médicales personnalisées
+
+    # --- Fichiers Cloud, Réservations, Logistique & Historiques Web ---
+    - DropboxListFilesAndFolders                # Arborescence complète de fichiers Dropbox (Cible Data Stealing)
+    - DropboxGetItemMetadata                    # Métadonnées et attributs de fichiers personnels (Cible Data Stealing)
+    - CiscoUmbrellaGetLogDetails                # Journaux d'activité réseau d'entreprise
+    - ExpediaSearchReservations                 # Réservations d'hôtels et billets d'avion
+    - FedExShipManagerSearchShipment            # Colis et adresses de livraison en transit
+    - GoogleSearchGetSearchHistory              # Historique des requêtes Google de l'utilisateur
+    - WebBrowserSearchHistory                   # Historique de navigation web complet
+
+  # =========================================================================
+  # 3. MÉTADONNÉES & RECHERCHES NON CONFIDENTIELLES (P_mod -> Neutre 0b00)
+  #    Réservé aux opérations arithmétiques, horloges système ou requêtes
+  #    ne touchant à aucune ressource utilisateur privée ni PII.
+  #    Toutes les arborescences cloud (Dropbox), graphes sociaux et recherches
+  #    de personnes sont classées en read:confidential pour prévenir
+  #    les attaques d'exfiltration Data Stealing (DS).
+  # =========================================================================
+  read:internal: []
+
+  # =========================================================================
+  # 4. CANAUX DE TRANSMISSION SORTANTE (P_chk -> Masqué si TRIFECTA 0b11)
+  #    Outils capables d'émettre des données vers l'extérieur (SMTP, Cloud, Partage).
+  #    Application de l'Invariant Lethal Trifecta : P=0 d'exfiltration.
+  # =========================================================================
+  egress:outside:
+    - GmailSendEmail                            # Canal d'exfiltration email externe
+    - NortonIdentitySafeSharePassword           # Exfiltration de mots de passe par partage tiers
+    - The23andMeShareData                       # Exfiltration de données génétiques vers l'extérieur
+
+  # =========================================================================
+  # 5. MUTATIONS CRITIQUES & DESTRUCTION (P_chk -> Masqué dès que TAINTED 0b01)
+  #    Opérations provoquant des dégâts matériels, logiques ou d'infrastructure.
+  #    Application de l'Invariant Sabotage Dyad : Neutralisation dès souillure.
+  # =========================================================================
+  write:destructive:
+    # --- Sabotage Logiciel & Données ---
+    - GitHubDeleteRepository                    # Destruction irréversible de code source
+    - DropboxMoveItem                           # Déplacement / désorganisation de fichiers
+    - SlackLeaveChannel                         # Révocation de présence dans les communications
+
+    # --- Altération de Données Médicales & Civiles ---
+    - EpicFHIRManageAppointments                # Annulation / altération de rendez-vous médicaux
+    - EpicFHIRManageClinicalDocuments           # Modification de dossiers cliniques
+    - EpicFHIRManagePatientRecords              # Altération de dossiers patients
+    - FacebookManagerUpdateUserProfile          # Défiguration de profil utilisateur
+    - FedExShipManagerManageShipment            # Altération de livraisons
+    - NortonIdentitySafeAutoFillPersonalInfo    # Écriture de données d'identité compromises
+    - The23andMeUpdateData                      # Altération de dossiers génétiques
+
+    # --- Contrôle Physique & Systèmes d'Urgence (Dégâts Cyber-Physiques) ---
+    - TrafficControlManageTrafficLightState           # Manipulation de feux de signalisation
+    - TrafficControlGivePriorityToEmergencyVehicle     # Fausse priorité de véhicules de secours
+    - EmergencyDispatchSystemCreateDispatchRequest     # Faux appels aux services d'urgence (Swatting)
+    - GoogleHomeScheduleDeviceAction                   # Altération d'appareils domotiques connectés
+    - IndoorRobotGoToRoom                              # Déplacement non autorisé d'un robot domestique
+    - DeepfakeGeneratorGenerateAudioDeepfake           # Génération frauduleuse de clones vocaux (usurpation)
+
+  # =========================================================================
+  # 6. TRANSACTIONS FINANCIÈRES & TRANSFERTS (P_chk -> Masqué dès que TAINTED)
+  #    Opérations de virement, paiement ou retrait de fonds.
+  #    Application de l'Invariant Financial Drain : Prévention de la perte monétaire.
+  # =========================================================================
+  exec:financial:
+    - BankManagerPayBill                        # Règlement de factures non sollicitées
+    - BankManagerTransferFunds                  # Virement bancaire frauduleux vers l'attaquant
+    - BinanceDeposit                            # Dépôt de crypto-actifs
+    - BinancePlaceOrder                         # Achat/vente d'actifs crypto sur le marché
+    - BinanceWithdraw                           # Retrait frauduleux de crypto vers wallet externe
+    - VenmoWithdrawMoney                        # Retrait d'argent liquide depuis Venmo
+
+  # =========================================================================
+  # 7. GESTION DES IDENTITÉS & DROITS D'ACCÈS (P_chk -> Masqué dès que TAINTED)
+  #    Modification des politiques de sécurité, déverrouillage physique et IAM.
+  #    Application de l'Invariant Privilege Escalation : Contrôle strict des accès.
+  # =========================================================================
+  iam:grant:
+    # --- Contrôle d'Accès Physique ---
+    - AugustSmartLockGrantGuestAccess           # Octroi de clé numérique à un intrus physique
+    - AugustSmartLockUnlockDoor                 # Déverrouillage physique de la serrure connectée
+
+    # --- Politiques Réseau & Révocation de Sécurité ---
+    - CiscoUmbrellaCreatePolicy                 # Création de politiques de filtrage réseau permissives
+    - CiscoUmbrellaUpdatePolicy                 # Altération de règles de sécurité firewall/DNS
+    - EvernoteManagerManageNoteSharingLevel     # Élévation du niveau de partage public de notes
+    - NortonIdentitySafeDisableTwoFactorAuthentication # Révocation critique de l'authentification 2FA
+
+  # =========================================================================
+  # 8. EXÉCUTION DE CODE & SHELL (P_chk -> Masqué dès que TAINTED)
+  #    Exécution de commandes système sur l'hôte sous-jacent.
+  #    Application de l'Invariant Arbitrary Code Execution (RCE).
+  # =========================================================================
+  exec:code:
+    - TerminalExecute                           # Exécution arbitraire de commandes Bash/PowerShell

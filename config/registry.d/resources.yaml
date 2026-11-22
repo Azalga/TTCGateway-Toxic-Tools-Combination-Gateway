@@ -1,0 +1,120 @@
+# ==============================================================================
+# config/registry.d/resources.yaml
+# TTCGateway: Ingress-Centric Resource Scoping & Parametric Projections (Grey-Box V2)
+# Evaluates deterministic Class I structural predicates at Layer 7 on materialized payloads.
+# ==============================================================================
+
+resources:
+  # ===========================================================================
+  # 1. Base de Connaissances & Wiki d'Entreprise
+  # ===========================================================================
+  internal_knowledge_base:
+    match:
+      url: "^https://(wiki|jira|confluence)\\.entreprise\\.lan/.*$"
+    override_mod: ["read:internal"]
+    override_chk: []
+    applies_to:
+      - fetch_page
+      - fetch_web_page
+
+  # ===========================================================================
+  # 2. Coffre-fort de Secrets d'Entreprise
+  # ===========================================================================
+  internal_vault:
+    match:
+      url: "^https://vault\\.entreprise\\.lan/.*$"
+    override_mod: ["read:confidential"]
+    override_chk: []
+    applies_to:
+      - fetch_page
+      - fetch_web_page
+
+  # ===========================================================================
+  # 3. Correspondance Email Interne d'Entreprise (Blue Sparrow Tech / TechCorp)
+  # ===========================================================================
+  internal_workspace_email:
+    match_content:
+      sender: ".*@(techcorp\\.internal|b?luesparrowtech\\.com|entreprise\\.lan|company\\.com|workspace\\.internal)$"
+    override_mod: ["read:confidential"]
+    override_chk: []
+    applies_to:
+      - read_email
+      - read_email_content
+      - get_unread_emails
+      - get_received_emails
+      - search_emails
+
+  # ===========================================================================
+  # 4. Événements de Calendrier d'Entreprise Internes
+  # ===========================================================================
+  internal_calendar_events:
+    match_content:
+      participants: ".*@(techcorp\\.internal|b?luesparrowtech\\.com|entreprise\\.lan|company\\.com|workspace\\.internal)$"
+    override_mod: ["read:confidential"]
+    override_chk: []
+    applies_to:
+      - get_day_calendar_events
+      - search_calendar_events
+
+  # ===========================================================================
+  # 5. Documents de Travail Internes du Cloud Drive (Procès-Verbaux de Réunion)
+  # ===========================================================================
+  internal_drive_files:
+    match_content:
+      filename: ".*meeting-minutes.*"
+      owner: ".*@(techcorp\\.internal|b?luesparrowtech\\.com|entreprise\\.lan|company\\.com|workspace\\.internal)$"
+    override_mod: ["read:confidential"]
+    override_chk: []
+    applies_to:
+      - read_drive_file
+      - get_file_by_id
+      - search_files_by_filename
+      - search_files
+
+# ==============================================================================
+# PARAMETRIC SCHEMA PROJECTIONS (MPM - Fine-Grained V2 Calendar & Share Scoping)
+# Under TAINTED / TRIFECTA states, projects closed-world known enterprise/contact
+# enums onto destination parameters for AgentDojo Workspace benchmarks.
+# Note: send_email is deliberately NOT projected under Trifecta, guaranteeing
+# deterministic physical pruning (P=0) and enforcing Conversational Staging.
+# ==============================================================================
+projections:
+
+  internal_calendar_projection:
+    applies_to:
+      - create_calendar_event
+      - add_calendar_event_participants
+    trigger_state: "TAINTED"
+    target_params:
+      - "participants"
+    allow_empty: true
+    allowed_enum:
+      - "emma.johnson@bluesparrowtech.com"
+      - "alex.williams@bluesparrowtech.com"
+      - "maria.garcia@bluesparrowtech.com"
+      - "mark.johnson@bluesparrowtech.com"
+      - "jane.maly@bluesparrowtech.com"
+      - "michael.smith@bluesparrowtech.com"
+      - "sara.lee@bluesparrowtech.com"
+      - "sarah.connor@gmail.com"
+      - "sarah.baker@gmail.com"
+      - "john.doe@clientcorp.com"
+      - "john.mitchell@gmail.com"
+      - "martha.raynolds@gmail.com"
+    prune_params: []
+
+  internal_share_projection:
+    applies_to:
+      - share_file
+    trigger_state: "TAINTED"
+    target_params:
+      - "email"
+      - "recipient"
+      - "target_email"
+    allowed_enum:
+      - "alex.martin@bluesparrowtech.com"
+      - "linda.jameson@bluesparrowtech.com"
+      - "david.lee@bluesparrowtech.com"
+      - "susan.lee@bluesparrowtech.com"
+      - "john.doe@gmail.com"
+    prune_params: []

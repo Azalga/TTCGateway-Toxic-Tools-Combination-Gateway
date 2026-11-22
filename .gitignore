@@ -1,0 +1,52 @@
+# ==============================================================================
+# TTCGateway - Official .gitignore
+# ==============================================================================
+
+# Academic paper, LaTeX source, distilled literature & private research notes
+paper/
+GEMINI.md
+version_18_octobre/
+"Do not include in git (NOTES from NOTION)/"
+"Retours à traiter/"
+Retours*
+github/
+graphify-out/
+presentation_*.pdf
+BENCHMARK_VERIFICATION_CHECKLIST.md
+benchmarks/autodojo/
+
+# Local environment & secrets
+.env
+*.env.local
+
+# Python virtual environment
+venv/
+.venv/
+env/
+
+# Python cache & bytecode
+__pycache__/
+*/**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Runtime scratch, temporary outputs & ad-hoc logs
+*.db
+*.sqlite3
+results/*_last_run.json
+results/macros_results.tex
+results/figures/
+enterprise_env/drafts/*.json
+enterprise_env/outbox/*.json
+scratch/
+
+# IDE & OS files
+.vscode/
+.idea/
+.agents/
+Thumbs.db
+.DS_Store
+
+# Archives
+*.zip
+*.tar.gz

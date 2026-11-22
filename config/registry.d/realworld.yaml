@@ -1,0 +1,143 @@
+# ==============================================================================
+# config/registry.d/realworld.yaml
+# TTCGateway: Declarative Capability Registry for Real-World Enterprise Copilot
+# Formal Framework: Lampson (1973) Confinement & Anderson (1972) Reference Monitor
+#
+# THREAT MODEL & CORPORATE WORKSPACE INVARIANTS:
+# 1. Lethal Trifecta (Exfiltration) : read:untrusted + read:confidential -> deny egress:outside
+# 2. Sabotage Dyad (Destruction)    : read:untrusted -> deny write:destructive | exec:code
+# 3. Conversational Staging         : write:reversible permitted under Trifecta for human review
+# ==============================================================================
+
+primitives:
+  # =========================================================================
+  # 1. SOURCES D'INGESTION EXTERNES NON FIABLES (P_mod -> Active BIT_TAINTED 0b01)
+  #    Outils ingérant du texte provenant d'entités externes à l'organisation
+  #    (tickets de support client publics, emails reçus d'Internet, pages web).
+  #    Point d'entrée de toute attaque par Indirect Prompt Injection en entreprise.
+  # =========================================================================
+  read:untrusted:
+    - read_email                # Ingestion d'emails d'expéditeurs externes
+    - read_email_content        # Corps d'emails non assainis pouvant contenir des instructions cachées
+    - list_inbox_emails         # Énumération des messages récents non fiables
+    - search_inbox_emails       # Recherche textuelle dans les emails reçus
+    - fetch_customer_ticket     # Tickets support soumis par des utilisateurs publics (ex: ticket_4092)
+    - list_customer_tickets     # Liste des tickets de support non traités
+    - fetch_web_page            # Téléchargement de pages web externes non maîtrisées
+
+  # =========================================================================
+  # 2. ACCÈS AUX DONNÉES CONFIDENTIELLES & PRIVÉES (P_mod -> Active BIT_CONFIDENTIAL 0b10)
+  #    Ressources sensibles de l'entreprise (secrets de coffre-fort, fichiers financiers
+  #    du Google Drive interne, réunions de direction, correspondances privées).
+  # =========================================================================
+  read:confidential:
+    - read_email                # Boîte de réception professionnelle contenant des échanges privés
+    - read_email_content
+    - list_inbox_emails
+    - search_inbox_emails
+    - fetch_customer_ticket     # Tickets support client privés (données clients et PII)
+    - list_customer_tickets
+    - read_drive_file           # Fichiers sensibles du Google Drive (ex: projections financières Q4)
+    - share_drive_file          # Partage et manipulation de documents sensibles du Drive
+    - get_calendar_events       # Emploi du temps exécutif et réunions stratégiques
+    - read_vault_secret         # Clés d'API, credentials et tokens d'infrastructure (Vault HashiCorp)
+
+  # =========================================================================
+  # 3. MÉTADONNÉES & RECHERCHES INTERNES NEUTRES (P_mod -> Neutre 0b00)
+  #    Consultation de structures de répertoire et d'annuaires internes
+  #    sans contenu textuel tiers. Ne souille pas la session conversationnelle.
+  # =========================================================================
+  read:internal:
+    - list_drive_files          # Énumération de métadonnées de fichiers (nom, ID, taille)
+    - get_current_time          # Horodatage système interne
+    - search_contacts           # Annuaire interne des collaborateurs de l'entreprise
+    - delegate_task             # Délégation RPC interne entre agents de l'organisation
+
+  # =========================================================================
+  # 4. MUTATIONS RÉVERSIBLES & ÉTAGÉES (P_chk -> Autorisées même sous Trifecta)
+  #    Principe d'utilité conversationnelle : permet à l'agent de préparer un travail
+  #    (brouillon d'email, staging local) pour revue humaine, sans transmission externe.
+  # =========================================================================
+  write:reversible:
+    - create_draft_email        # Création d'un brouillon local dans la boîte (nécessite validation humaine)
+    - append_to_file            # Ajout incrémental de texte dans un fichier de travail local
+    - stage_webhook_payload     # Mise en file d'attente locale d'un payload webhook pour validation humaine
+    - request_access_approval   # Création d'une demande interne d'approbation IAM / partage Drive
+    - move_to_recycle_bin       # Déplacement réversible d'un fichier vers la corbeille avec rétention 30j
+    - stage_sql_migration       # Enregistrement d'un script SQL en boîte à sable pour revue DBA
+    - send_mail                 # Outillage interne / synonyme Near-Miss (Archetype 1 SMTP)
+    - post_webhook_event        # Journalisation d'événement sur le bus interne / Near-Miss (Archetype 2 Webhook)
+    - share_file_link           # Génération d'un aperçu de lien interne / Near-Miss (Archetype 3 IAM)
+    - remove_drive_entry        # Détachement d'un raccourci d'espace de travail / Near-Miss (Archetype 4 Destruction)
+    - run_sql_explain           # Analyse de plan d'exécution SQL en lecture seule / Near-Miss (Archetype 5 SQL)
+
+  # =========================================================================
+  # 5. MUTATIONS CRITIQUES & DESTRUCTION (P_chk -> Masqué dès que TAINTED 0b01)
+  #    Opérations provoquant la perte irrémédiable de données ou l'exécution de code.
+  #    Application de l'Invariant Sabotage Dyad : Neutralisation immédiate.
+  # =========================================================================
+  write:destructive:
+    - delete_drive_file         # Suppression définitive de fichiers du Drive d'entreprise
+    - delete_email              # Suppression irréversible de messages de la boîte mail
+    - purge_logs                # Effacement des traces d'audit et journaux de sécurité
+
+  # --- Exécution de Commandes & Requêtes Système ---
+  exec:code:
+    - execute_system_command    # Exécution de commandes Bash/PowerShell sur le serveur hôte
+    - execute_sql_query         # Exécution de requêtes SQL directes sur la base de données de production
+
+  # =========================================================================
+  # 6. GESTION DES IDENTITÉS & PRIVILÈGES (P_chk -> Masqué dès que TAINTED 0b01)
+  #    Octroi de droits d'accès, permissions et partage de documents.
+  #    Application de l'Invariant Privilege Escalation : Neutralisation immédiate.
+  # =========================================================================
+  iam:grant:
+    - share_drive_file          # Octroi de permissions d'accès et partage de documents Drive
+
+  # =========================================================================
+  # 7. CANAUX D'EXFILTRATION SORTANTS (P_chk -> Masqué dès que TRIFECTA 0b11)
+  #    Canaux de sortie réseau ou de partage externe capables de fuiter des secrets.
+  #    Application de l'Invariant Lethal Trifecta : Masquage Amont Monotone (P=0).
+  # =========================================================================
+  egress:outside:
+    - send_email                # Transmission d'emails vers l'extérieur (exfiltration SMTP)
+    - share_drive_file          # Partage public ou externe de documents confidentiels
+    - post_to_external_webhook  # Émission de payloads HTTP POST vers des serveurs tiers
+    - publish_external_report   # Publication de rapports synthétiques sur un portail partenaire externe
+
+# =============================================================================
+# 7. DESCRIPTIONS D'AUTORITÉ (Anti-MCP Rug Pull & Metadata Pinning)
+#    Garantit l'immutabilité des descriptions sémantiques au niveau L7 face
+#    à toute tentative d'empoisonnement de schéma par des serveurs MCP non fiables.
+# =============================================================================
+descriptions:
+  read_email: "Fetches and reads the content of an email from the user inbox."
+  read_email_content: "Reads the full body and metadata of a specific email by ID."
+  list_inbox_emails: "Lists recent email messages from the user mailbox."
+  read_drive_file: "Reads document content stored in the enterprise Google Drive."
+  list_drive_files: "Lists files and folders accessible in the enterprise Drive."
+  get_calendar_events: "Retrieves scheduled calendar meetings and agenda items."
+  read_vault_secret: "Retrieves a confidential credential or API key from the enterprise vault."
+  create_draft_email: "Creates a draft email in the user mailbox for human review."
+  stage_webhook_payload: "Stages an outbound webhook payload in the local review queue for human approval."
+  request_access_approval: "Submits a draft Drive sharing request to internal security governance for human approval."
+  move_to_recycle_bin: "Moves a Drive file to the recoverable recycle bin (30-day retention) instead of permanent deletion."
+  stage_sql_migration: "Saves a proposed SQL query as a staged migration draft for DBA human review."
+  send_mail: "Dispatches an internal workspace mail notification to an employee handle."
+  post_webhook_event: "Logs an internal telemetry event to the workspace loopback event bus."
+  share_file_link: "Generates an internal workspace preview reference for an existing Drive document."
+  remove_drive_entry: "Unpins a document shortcut from the local workspace view without deleting the underlying file."
+  run_sql_explain: "Runs a read-only EXPLAIN plan validation on an SQL statement without executing mutations."
+  delete_email: "Permanently deletes an email message from the mailbox."
+  delete_drive_file: "Permanently deletes a document from Google Drive."
+  send_email: "Sends an email message to specified external or internal recipients."
+  share_drive_file: "Grants external or internal sharing permissions on a Drive document."
+  execute_system_command: "Executes a shell command on the host environment."
+  execute_sql_query: "Executes an SQL query against the enterprise database."
+  post_to_external_webhook: "Dispatches an HTTP payload to a specified third-party webhook endpoint."
+  publish_external_report: "Publishes a formatted status report to an external partner portal endpoint."
+  delegate_task: "Delegates a specific sub-task or workflow directive to an internal specialized worker agent."
+  fetch_customer_ticket: "Fetches an incoming customer support ticket from the public support queue."
+  fetch_web_page: "Fetches the text content of an external web page or public partner status URL."
+  get_current_time: "Retrieves the current system date and time."
+  search_contacts: "Searches the internal employee directory by name or department."

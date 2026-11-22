@@ -1,0 +1,123 @@
+# ==============================================================================
+# TTCGateway: Declarative Capability Registry for AgentDojo Workspace (24 Tools)
+# Formal Framework: Lampson (1973) Confinement & Anderson (1972) Reference Monitor
+# 
+# THREAT MODEL & SECURITY INVARIANTS:
+# 1. Lethal Trifecta (Exfiltration) : read:untrusted + read:confidential -> deny egress:outside
+# 2. Sabotage Dyad (Destruction)    : read:untrusted -> deny write:destructive
+# 3. Privilege Hijack (IAM Grant)   : read:untrusted -> deny iam:grant
+# ==============================================================================
+
+primitives:
+  # =========================================================================
+  # 1. SOURCES D'INGESTION EXTERNES NON FIABLES (P_mod -> Active BIT_TAINTED 0b01)
+  #    Vecteurs d'ingestion exposés à des tiers externes pouvant injecter des prompts.
+  # =========================================================================
+  read:untrusted:
+    # --- Vecteur Email ---
+    # Les emails reçus ou non lus proviennent d'expéditeurs externes arbitraires.
+    # C'est le vecteur canonique d'Indirect Prompt Injection (ex: phishing, spam, instructions cachées).
+    - get_unread_emails
+    - get_received_emails
+    - search_emails
+
+    # --- Vecteur Calendrier ---
+    # Les événements d'agenda peuvent être créés ou proposés par des tiers externes.
+    # Leurs descriptions et titres peuvent dissimuler des payloads d'injection.
+    - search_calendar_events
+    - get_day_calendar_events
+
+    # --- Vecteur Cloud Drive ---
+    # Dans l'environnement Workspace, les fichiers du Drive peuvent être partagés par des tiers
+    # ou contenir des données externes (ex: feedback client, formulaires en ligne, drive_keywords_stuffing_injection).
+    # search_files_by_filename, search_files, get_file_by_id ET list_files retournent des objets
+    # CloudDriveFile complets incluant le champ 'content' (corps du texte brut selon cloud_drive_client.py:110).
+    # Contrairement à un 'ls' POSIX pur, list_files déverse l'intégralité du texte de tous les fichiers du Drive
+    # dans le prompt de l'agent, ingérant directement les payloads d'injection indirecte (ex: DOJO_FULL_37).
+    - get_file_by_id
+    - search_files_by_filename
+    - search_files
+    - list_files
+
+  # =========================================================================
+  # 2. ACCÈS AUX DONNÉES CONFIDENTIELLES & PRIVÉES (P_mod -> Active BIT_CONFIDENTIAL 0b10)
+  #    Ressources sensibles contenant des secrets, correspondances privées ou données métier.
+  # =========================================================================
+  read:confidential:
+    # --- Correspondance Privée ---
+    - get_unread_emails
+    - get_received_emails
+    - search_emails
+    - get_sent_emails         # Historique de communications privées de l'utilisateur
+    - get_draft_emails        # Brouillons confidentiels non publiés
+
+    # --- Données Privées & Documents d'Entreprise ---
+    - get_file_by_id          # Corps de fichiers contenant des données financières, RH, etc.
+    - search_files_by_filename
+    - search_files
+    - list_files              # Retourne tous les objets CloudDriveFile complets du Drive
+
+    # --- Données Temporelles Privées & PII ---
+    - get_day_calendar_events # Emploi du temps personnel et réunions confidentielles
+    - search_calendar_events
+    - search_contacts_by_email # Carnet d'adresses personnel contenant des PII (emails privés)
+
+  # =========================================================================
+  # 3. MÉTADONNÉES & RECHERCHES INTERNES NEUTRES (P_mod -> Neutre 0b00, aucun bit)
+  #    Consultation de métadonnées structurelles pures sans ingestion de contenu textuel tiers.
+  # =========================================================================
+  read:internal:
+    # --- Annuaire d'Entreprise & Horloge Système ---
+    # search_contacts_by_name et get_current_day consultent les métadonnées internes.
+    - search_contacts_by_name
+    - get_current_day
+
+  # =========================================================================
+  # 4. MUTATIONS INTERNES BÉNIGNES (P_chk -> Non destructives, autorisées)
+  #    Opérations d'écriture locales réversibles au sein de l'environnement interne.
+  # =========================================================================
+  write:internal:
+    - create_file                 # Création de document interne
+    - append_to_file              # Ajout de texte dans un fichier interne
+    - create_calendar_event       # Création locale d'événement dans l'agenda utilisateur
+    - reschedule_calendar_event   # Déplacement horaire d'un événement existant
+
+  # =========================================================================
+  # 5. CANAUX DE TRANSMISSION SORTANTS (P_chk -> Masqué si TRIFECTA 0b11)
+  #    Outils capables de transmettre des données vers des tiers ou des réseaux externes.
+  #    Application de l'Invariant Lethal Trifecta : Masquage Amont Monotone (MTM, P = 0).
+  # =========================================================================
+  egress:outside:
+    # --- Canal SMTP Réseau ---
+    # Exfiltration directe par envoi d'email à des destinataires externes.
+    - send_email
+
+    # --- Canal de Partage Cloud ---
+    # Exfiltration par partage de fichier Drive vers un compte tiers externe.
+    - share_file
+
+    # --- Canaux de Notification d'Agenda (Exfiltration Latente) ---
+    # create_calendar_event et add_calendar_event_participants acceptent un paramètre 'participants'.
+    # Dans la V1 Black-Box, ils portent 'egress:outside'. En V2 Resource-Aware, la passerelle
+    # projette la liste fermée des contacts légitimes sur 'participants' (ou autorise un événement local sans participants).
+    - create_calendar_event
+    - add_calendar_event_participants
+
+  # =========================================================================
+  # 6. MUTATIONS CRITIQUES & DESTRUCTION (P_chk -> Masqué si TAINTED 0b01 ou 0b11)
+  #    Opérations destructives irréversibles de suppression définitive.
+  #    Application de l'Invariant Sabotage Dyad : Neutralisation immédiate dès souillure.
+  # =========================================================================
+  write:destructive:
+    - delete_email            # Suppression irréversible d'emails
+    - delete_file             # Suppression irréversible de fichiers du Cloud Drive
+    - cancel_calendar_event   # Annulation et suppression définitive de réunions
+
+  # =========================================================================
+  # 7. GESTION DES IDENTITÉS & PRIVILÈGES (P_chk -> Masqué si TAINTED 0b01 ou 0b11)
+  #    Modification des droits d'accès, permissions et ACLs.
+  #    Application de l'Invariant Privilege Hijack : Prévention de l'élévation de privilèges.
+  # =========================================================================
+  iam:grant:
+    - share_file                      # Octroi de permissions de lecture/écriture sur des fichiers
+    - add_calendar_event_participants # Ajout de nouveaux participants autorisés à une réunion

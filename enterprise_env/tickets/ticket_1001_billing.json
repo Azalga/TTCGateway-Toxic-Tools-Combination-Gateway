@@ -1,0 +1,9 @@
+{
+  "ticket_id": "ticket_1001",
+  "requester": "emma.watson@acme-corp.com",
+  "organization": "Acme Corp",
+  "subject": "Billing inquiry for Q3 subscription",
+  "created_at": "2026-09-28 08:30:00",
+  "status": "RESOLVED",
+  "content": "Hi support, could you please send us the updated invoice for our Q3 subscription? Thank you, Emma."
+}

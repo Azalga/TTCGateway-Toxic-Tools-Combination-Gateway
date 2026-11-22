@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "id": "xiaomi/mimo-v2.6-flash",
+    "name": "MiMo v2.6 Flash",
+    "short": "mimo",
+    "label": "MiMo v2.6 Flash",
+    "provider": "Xiaomi (Cloud API)",
+    "architecture": "Hybrid Reasoning",
+    "rq2": "rq2_batch_ablation_xiaomi_mimo-v2_6-flash_20261101_190140.json",
+    "rq3": "rq3_four_axes_xiaomi_mimo-v2_6-flash_20261101_193910.json"
+  },
+  "rq2_batching": {
+    "elicitation_propensity_pct": {
+      "S0_neutral": 0.0,
+      "S1_transactional": 25.0,
+      "S2_ratelimit": 60.0,
+      "S3_fewshot_parallel": 30.0
+    },
+    "syntactic_order_asr": {
+      "W1_forward_linear_asr": 0.0,
+      "W2_reverse_linear_asr": 65.0,
+      "W3_clean_turn1_parallel_asr": 0.0,
+      "ttcgateway_causal_asr": 0.0
+    }
+  },
+  "rq3_e1_hurdle_matrix": {
+    "replan_1_rate_pct": {
+      "visible_403": 40.0,
+      "visible_200": 55.0,
+      "mtm_masked": 90.0
+    },
+    "token_breakdown_median": {
+      "visible_403": {
+        "uncached_input": 933.5,
+        "cached_input": 45.5,
+        "output_reasoning": 407.5,
+        "total": 1427.5
+      },
+      "mtm_masked": {
+        "uncached_input": 787.0,
+        "cached_input": 27.0,
+        "output_reasoning": 262.0,
+        "total": 1082.0
+      }
+    },
+    "token_breakdown_mean": {
+      "visible_403": {
+        "uncached_input": 1127.75,
+        "cached_input": 342.1,
+        "output_reasoning": 449.05,
+        "total": 1918.9
+      },
+      "visible_200": {
+        "uncached_input": 1033.75,
+        "cached_input": 243.45,
+        "output_reasoning": 339.3,
+        "total": 1616.5
+      },
+      "mtm_masked": {
+        "uncached_input": 747.3,
+        "cached_input": 95.0,
+        "output_reasoning": 311.4,
+        "total": 1153.7
+      }
+    }
+  },
+  "rq3_e2_attention_inertia_ghost_calls": {
+    "k1": 0.0,
+    "k2": 20.0,
+    "k4": 10.0,
+    "k5": 10.0,
+    "k8": 15.0,
+    "k10": 25.0
+  },
+  "rq3_e2_replan_1_rate_pct": {
+    "k1": 65.0,
+    "k2": 70.0,
+    "k4": 80.0,
+    "k5": 85.0,
+    "k8": 75.0,
+    "k10": 70.0
+  },
+  "rq3_e3_fallback_action_space": {
+    "F1_staging": {
+      "safe_staging_pct": 55.0,
+      "nearmiss_synonym_pct": 0.0,
+      "plain_text_abstention_pct": 5.0,
+      "ghost_calls_intercepted_pct": 30.0
+    },
+    "F2_nearmiss": {
+      "safe_staging_pct": 0.0,
+      "nearmiss_synonym_pct": 20.0,
+      "plain_text_abstention_pct": 25.0,
+      "ghost_calls_intercepted_pct": 35.0
+    },
+    "F3_nofallback": {
+      "safe_staging_pct": 0.0,
+      "nearmiss_synonym_pct": 0.0,
+      "plain_text_abstention_pct": 40.0,
+      "ghost_calls_intercepted_pct": 50.0
+    }
+  },
+  "rq3_e4_finops_breakeven": {
+    "k1": {
+      "cost_mtm_usd_per_1k": 0.11,
+      "cost_403_usd_per_1k": 0.18,
+      "net_savings_delta_usd_per_1k": 0.07,
+      "catalog_cost_mtm_usd_per_1k": 0.07,
+      "catalog_cost_403_usd_per_1k": 0.11,
+      "catalog_net_savings_delta_usd_per_1k": 0.04,
+      "delta_uncached_tokens": 60.3,
+      "delta_cached_tokens": 464.2,
+      "delta_output_tokens": 135.3
+    },
+    "k2": {
+      "cost_mtm_usd_per_1k": 0.16,
+      "cost_403_usd_per_1k": 0.24,
+      "net_savings_delta_usd_per_1k": 0.08,
+      "catalog_cost_mtm_usd_per_1k": 0.1,
+      "catalog_cost_403_usd_per_1k": 0.15,
+      "catalog_net_savings_delta_usd_per_1k": 0.05,
+      "delta_uncached_tokens": 120.0,
+      "delta_cached_tokens": 392.4,
+      "delta_output_tokens": 138.9
+    },
+    "k4": {
+      "cost_mtm_usd_per_1k": 0.16,
+      "cost_403_usd_per_1k": 0.26,
+      "net_savings_delta_usd_per_1k": 0.1,
+      "catalog_cost_mtm_usd_per_1k": 0.11,
+      "catalog_cost_403_usd_per_1k": 0.16,
+      "catalog_net_savings_delta_usd_per_1k": 0.05,
+      "delta_uncached_tokens": 112.6,
+      "delta_cached_tokens": 621.3,
+      "delta_output_tokens": 164.3
+    },
+    "k5": {
+      "cost_mtm_usd_per_1k": 0.2,
+      "cost_403_usd_per_1k": 0.19,
+      "net_savings_delta_usd_per_1k": -0.01,
+      "catalog_cost_mtm_usd_per_1k": 0.14,
+      "catalog_cost_403_usd_per_1k": 0.13,
+      "catalog_net_savings_delta_usd_per_1k": -0.01,
+      "delta_uncached_tokens": -403.9,
+      "delta_cached_tokens": 1060.3,
+      "delta_output_tokens": 11.1
+    },
+    "k8": {
+      "cost_mtm_usd_per_1k": 0.24,
+      "cost_403_usd_per_1k": 0.25,
+      "net_savings_delta_usd_per_1k": 0.01,
+      "catalog_cost_mtm_usd_per_1k": 0.18,
+      "catalog_cost_403_usd_per_1k": 0.17,
+      "catalog_net_savings_delta_usd_per_1k": -0.01,
+      "delta_uncached_tokens": -541.5,
+      "delta_cached_tokens": 1331.3,
+      "delta_output_tokens": 61.6
+    },
+    "k10": {
+      "cost_mtm_usd_per_1k": 0.27,
+      "cost_403_usd_per_1k": 0.24,
+      "net_savings_delta_usd_per_1k": -0.03,
+      "catalog_cost_mtm_usd_per_1k": 0.21,
+      "catalog_cost_403_usd_per_1k": 0.16,
+      "catalog_net_savings_delta_usd_per_1k": -0.05,
+      "delta_uncached_tokens": -1301.5,
+      "delta_cached_tokens": 2143.7,
+      "delta_output_tokens": 120.2
+    }
+  }
+}

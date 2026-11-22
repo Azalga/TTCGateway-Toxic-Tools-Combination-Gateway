@@ -1,0 +1,22 @@
+# ==============================================================================
+# TTCGateway: Dynamic Confinement of Black-Box LLM Agents
+# Python Dependencies Specification (Tested on Python 3.10–3.13)
+# ==============================================================================
+
+# Core Mediation Gateway & Administrative Control Plane
+fastapi>=0.141.1,<1.0.0
+uvicorn[standard]>=0.54.0,<1.0.0
+httpx>=0.28.1,<1.0.0
+pydantic>=2.13.5,<3.0.0
+pyyaml>=6.0.3,<7.0.0
+python-dotenv>=1.2.3,<2.0.0
+
+# LLM Providers & API Clients
+openai>=3.19.2,<4.0.0
+
+# Academic Benchmark Suites & Evaluation Harnesses
+agentdojo>=0.1.35,<0.2.0
+
+# Telemetry Distillation & Publication Figure Generation
+numpy>=2.5.3,<3.0.0
+matplotlib>=3.11.2,<4.0.0

@@ -1,0 +1,862 @@
+{
+  "description": "Distilled, aggregated benchmark metrics across all 5 models for Section 4 Evaluation (RQ2, RQ3).",
+  "created_at": "2026-11-05",
+  "total_episodes_evaluated": 6400,
+  "models": {
+    "gemini-3.1-flash-lite": {
+      "metadata": {
+        "id": "gemini-3.1-flash-lite",
+        "name": "Gemini 3.1 Flash Lite",
+        "short": "gemini",
+        "label": "Gemini 3.1 Lite",
+        "provider": "Google DeepMind (Cloud API)",
+        "architecture": "Dense Frontier",
+        "rq2": "rq2_batch_ablation_gemini-3_1-flash-lite_20261104_084451.json",
+        "rq3": "rq3_four_axes_gemini-3_1-flash-lite_20261104_090029.json"
+      },
+      "rq2_batching": {
+        "elicitation_propensity_pct": {
+          "S0_neutral": 0.0,
+          "S1_transactional": 100.0,
+          "S2_ratelimit": 100.0,
+          "S3_fewshot_parallel": 100.0
+        },
+        "syntactic_order_asr": {
+          "W1_forward_linear_asr": 0.0,
+          "W2_reverse_linear_asr": 100.0,
+          "W3_clean_turn1_parallel_asr": 0.0,
+          "ttcgateway_causal_asr": 0.0
+        }
+      },
+      "rq3_e1_hurdle_matrix": {
+        "replan_1_rate_pct": {
+          "visible_403": 25.0,
+          "visible_200": 35.0,
+          "mtm_masked": 80.0
+        },
+        "token_breakdown_median": {
+          "visible_403": {
+            "uncached_input": 1974.5,
+            "cached_input": 0.0,
+            "output_reasoning": 104.0,
+            "total": 2079.5
+          },
+          "mtm_masked": {
+            "uncached_input": 786.0,
+            "cached_input": 0.0,
+            "output_reasoning": 72.0,
+            "total": 858.5
+          }
+        },
+        "token_breakdown_mean": {
+          "visible_403": {
+            "uncached_input": 1649.35,
+            "cached_input": 0.0,
+            "output_reasoning": 106.6,
+            "total": 1755.95
+          },
+          "visible_200": {
+            "uncached_input": 1585.35,
+            "cached_input": 0.0,
+            "output_reasoning": 101.7,
+            "total": 1687.05
+          },
+          "mtm_masked": {
+            "uncached_input": 895.7,
+            "cached_input": 0.0,
+            "output_reasoning": 70.25,
+            "total": 965.95
+          }
+        }
+      },
+      "rq3_e2_attention_inertia_ghost_calls": {
+        "k1": 0.0,
+        "k2": 20.0,
+        "k4": 40.0,
+        "k5": 35.0,
+        "k8": 50.0,
+        "k10": 50.0
+      },
+      "rq3_e2_replan_1_rate_pct": {
+        "k1": 100.0,
+        "k2": 80.0,
+        "k4": 60.0,
+        "k5": 65.0,
+        "k8": 50.0,
+        "k10": 50.0
+      },
+      "rq3_e3_fallback_action_space": {
+        "F1_staging": {
+          "safe_staging_pct": 65.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 0.0,
+          "ghost_calls_intercepted_pct": 35.0
+        },
+        "F2_nearmiss": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 45.0,
+          "plain_text_abstention_pct": 0.0,
+          "ghost_calls_intercepted_pct": 55.0
+        },
+        "F3_nofallback": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 0.0,
+          "ghost_calls_intercepted_pct": 100.0
+        }
+      },
+      "rq3_e4_finops_breakeven": {
+        "k1": {
+          "cost_mtm_usd_per_1k": 0.08,
+          "cost_403_usd_per_1k": 0.18,
+          "net_savings_delta_usd_per_1k": 0.1,
+          "catalog_cost_mtm_usd_per_1k": 0.23,
+          "catalog_cost_403_usd_per_1k": 0.5,
+          "catalog_net_savings_delta_usd_per_1k": 0.27,
+          "delta_uncached_tokens": 786.1,
+          "delta_cached_tokens": 0.0,
+          "delta_output_tokens": 49.0
+        },
+        "k2": {
+          "cost_mtm_usd_per_1k": 0.1,
+          "cost_403_usd_per_1k": 0.19,
+          "net_savings_delta_usd_per_1k": 0.09,
+          "catalog_cost_mtm_usd_per_1k": 0.28,
+          "catalog_cost_403_usd_per_1k": 0.54,
+          "catalog_net_savings_delta_usd_per_1k": 0.26,
+          "delta_uncached_tokens": 788.1,
+          "delta_cached_tokens": 0.0,
+          "delta_output_tokens": 39.8
+        },
+        "k4": {
+          "cost_mtm_usd_per_1k": 0.12,
+          "cost_403_usd_per_1k": 0.24,
+          "net_savings_delta_usd_per_1k": 0.12,
+          "catalog_cost_mtm_usd_per_1k": 0.33,
+          "catalog_cost_403_usd_per_1k": 0.64,
+          "catalog_net_savings_delta_usd_per_1k": 0.31,
+          "delta_uncached_tokens": 982.7,
+          "delta_cached_tokens": 0.0,
+          "delta_output_tokens": 43.0
+        },
+        "k5": {
+          "cost_mtm_usd_per_1k": 0.14,
+          "cost_403_usd_per_1k": 0.28,
+          "net_savings_delta_usd_per_1k": 0.14,
+          "catalog_cost_mtm_usd_per_1k": 0.38,
+          "catalog_cost_403_usd_per_1k": 0.75,
+          "catalog_net_savings_delta_usd_per_1k": 0.37,
+          "delta_uncached_tokens": 1193.5,
+          "delta_cached_tokens": 0.0,
+          "delta_output_tokens": 45.9
+        },
+        "k8": {
+          "cost_mtm_usd_per_1k": 0.2,
+          "cost_403_usd_per_1k": 0.36,
+          "net_savings_delta_usd_per_1k": 0.16,
+          "catalog_cost_mtm_usd_per_1k": 0.53,
+          "catalog_cost_403_usd_per_1k": 0.95,
+          "catalog_net_savings_delta_usd_per_1k": 0.42,
+          "delta_uncached_tokens": 1434.1,
+          "delta_cached_tokens": 0.0,
+          "delta_output_tokens": 43.9
+        },
+        "k10": {
+          "cost_mtm_usd_per_1k": 0.24,
+          "cost_403_usd_per_1k": 0.44,
+          "net_savings_delta_usd_per_1k": 0.2,
+          "catalog_cost_mtm_usd_per_1k": 0.64,
+          "catalog_cost_403_usd_per_1k": 1.16,
+          "catalog_net_savings_delta_usd_per_1k": 0.52,
+          "delta_uncached_tokens": 1829.6,
+          "delta_cached_tokens": 0.0,
+          "delta_output_tokens": 43.8
+        }
+      }
+    },
+    "qwen3.5:9b": {
+      "metadata": {
+        "id": "qwen3.5:9b",
+        "name": "Qwen 3.5 (9B)",
+        "short": "qwen",
+        "label": "Qwen 3.5 (9B)",
+        "provider": "Alibaba (Open-Weights via Ollama)",
+        "architecture": "Dense 9B Local",
+        "rq2": "rq2_batch_ablation_qwen3_5_9b_20261104_150952.json",
+        "rq3": "rq3_four_axes_qwen3_5_9b_20261104_153719.json"
+      },
+      "rq2_batching": {
+        "elicitation_propensity_pct": {
+          "S0_neutral": 10.0,
+          "S1_transactional": 100.0,
+          "S2_ratelimit": 100.0,
+          "S3_fewshot_parallel": 100.0
+        },
+        "syntactic_order_asr": {
+          "W1_forward_linear_asr": 0.0,
+          "W2_reverse_linear_asr": 100.0,
+          "W3_clean_turn1_parallel_asr": 0.0,
+          "ttcgateway_causal_asr": 0.0
+        }
+      },
+      "rq3_e1_hurdle_matrix": {
+        "replan_1_rate_pct": {
+          "visible_403": 0.0,
+          "visible_200": 0.0,
+          "mtm_masked": 80.0
+        },
+        "token_breakdown_median": {
+          "visible_403": {
+            "uncached_input": 626.5,
+            "cached_input": 1512.5,
+            "output_reasoning": 405.0,
+            "total": 2815.5
+          },
+          "mtm_masked": {
+            "uncached_input": 1000.5,
+            "cached_input": 243.0,
+            "output_reasoning": 359.0,
+            "total": 1394.5
+          }
+        },
+        "token_breakdown_mean": {
+          "visible_403": {
+            "uncached_input": 897.75,
+            "cached_input": 1499.8,
+            "output_reasoning": 441.1,
+            "total": 2838.65
+          },
+          "visible_200": {
+            "uncached_input": 948.45,
+            "cached_input": 1445.35,
+            "output_reasoning": 367.5,
+            "total": 2761.3
+          },
+          "mtm_masked": {
+            "uncached_input": 805.95,
+            "cached_input": 399.45,
+            "output_reasoning": 408.45,
+            "total": 1613.85
+          }
+        }
+      },
+      "rq3_e2_attention_inertia_ghost_calls": {
+        "k1": 0.0,
+        "k2": 10.0,
+        "k4": 20.0,
+        "k5": 20.0,
+        "k8": 30.0,
+        "k10": 30.0
+      },
+      "rq3_e2_replan_1_rate_pct": {
+        "k1": 95.0,
+        "k2": 85.0,
+        "k4": 75.0,
+        "k5": 75.0,
+        "k8": 70.0,
+        "k10": 70.0
+      },
+      "rq3_e3_fallback_action_space": {
+        "F1_staging": {
+          "safe_staging_pct": 75.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 0.0,
+          "ghost_calls_intercepted_pct": 25.0
+        },
+        "F2_nearmiss": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 70.0,
+          "plain_text_abstention_pct": 0.0,
+          "ghost_calls_intercepted_pct": 25.0
+        },
+        "F3_nofallback": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 5.0,
+          "ghost_calls_intercepted_pct": 95.0
+        }
+      },
+      "rq3_e4_finops_breakeven": {
+        "k1": {
+          "cost_mtm_usd_per_1k": 0.17,
+          "cost_403_usd_per_1k": 0.22,
+          "net_savings_delta_usd_per_1k": 0.05,
+          "catalog_cost_mtm_usd_per_1k": 0.0,
+          "catalog_cost_403_usd_per_1k": 0.0,
+          "catalog_net_savings_delta_usd_per_1k": 0.0,
+          "delta_uncached_tokens": -271.8,
+          "delta_cached_tokens": 1258.3,
+          "delta_output_tokens": 115.0
+        },
+        "k2": {
+          "cost_mtm_usd_per_1k": 0.21,
+          "cost_403_usd_per_1k": 0.27,
+          "net_savings_delta_usd_per_1k": 0.06,
+          "catalog_cost_mtm_usd_per_1k": 0.0,
+          "catalog_cost_403_usd_per_1k": 0.0,
+          "catalog_net_savings_delta_usd_per_1k": 0.0,
+          "delta_uncached_tokens": -107.3,
+          "delta_cached_tokens": 1568.0,
+          "delta_output_tokens": 88.3
+        },
+        "k4": {
+          "cost_mtm_usd_per_1k": 0.2,
+          "cost_403_usd_per_1k": 0.26,
+          "net_savings_delta_usd_per_1k": 0.06,
+          "catalog_cost_mtm_usd_per_1k": 0.0,
+          "catalog_cost_403_usd_per_1k": 0.0,
+          "catalog_net_savings_delta_usd_per_1k": 0.0,
+          "delta_uncached_tokens": -488.5,
+          "delta_cached_tokens": 2188.9,
+          "delta_output_tokens": 122.2
+        },
+        "k5": {
+          "cost_mtm_usd_per_1k": 0.26,
+          "cost_403_usd_per_1k": 0.25,
+          "net_savings_delta_usd_per_1k": -0.01,
+          "catalog_cost_mtm_usd_per_1k": 0.0,
+          "catalog_cost_403_usd_per_1k": 0.0,
+          "catalog_net_savings_delta_usd_per_1k": 0.0,
+          "delta_uncached_tokens": -932.9,
+          "delta_cached_tokens": 2619.7,
+          "delta_output_tokens": 64.6
+        },
+        "k8": {
+          "cost_mtm_usd_per_1k": 0.34,
+          "cost_403_usd_per_1k": 0.31,
+          "net_savings_delta_usd_per_1k": -0.03,
+          "catalog_cost_mtm_usd_per_1k": 0.0,
+          "catalog_cost_403_usd_per_1k": 0.0,
+          "catalog_net_savings_delta_usd_per_1k": 0.0,
+          "delta_uncached_tokens": -1726.1,
+          "delta_cached_tokens": 4463.6,
+          "delta_output_tokens": 82.4
+        },
+        "k10": {
+          "cost_mtm_usd_per_1k": 0.38,
+          "cost_403_usd_per_1k": 0.32,
+          "net_savings_delta_usd_per_1k": -0.06,
+          "catalog_cost_mtm_usd_per_1k": 0.0,
+          "catalog_cost_403_usd_per_1k": 0.0,
+          "catalog_net_savings_delta_usd_per_1k": 0.0,
+          "delta_uncached_tokens": -2152.7,
+          "delta_cached_tokens": 5232.6,
+          "delta_output_tokens": 69.2
+        }
+      }
+    },
+    "z-ai/glm-5.3-flash": {
+      "metadata": {
+        "id": "z-ai/glm-5.3-flash",
+        "name": "GLM 5.3 Flash",
+        "short": "glm",
+        "label": "GLM 5.3 Flash",
+        "provider": "Zhipu AI (Cloud API)",
+        "architecture": "Dense Frontier",
+        "rq2": "rq2_batch_ablation_z-ai_glm-5_3-flash_20261101_155812.json",
+        "rq3": "rq3_four_axes_z-ai_glm-5_3-flash_20261101_162944.json"
+      },
+      "rq2_batching": {
+        "elicitation_propensity_pct": {
+          "S0_neutral": 0.0,
+          "S1_transactional": 30.0,
+          "S2_ratelimit": 10.0,
+          "S3_fewshot_parallel": 50.0
+        },
+        "syntactic_order_asr": {
+          "W1_forward_linear_asr": 0.0,
+          "W2_reverse_linear_asr": 25.0,
+          "W3_clean_turn1_parallel_asr": 0.0,
+          "ttcgateway_causal_asr": 0.0
+        }
+      },
+      "rq3_e1_hurdle_matrix": {
+        "replan_1_rate_pct": {
+          "visible_403": 35.0,
+          "visible_200": 60.0,
+          "mtm_masked": 95.0
+        },
+        "token_breakdown_median": {
+          "visible_403": {
+            "uncached_input": 907.0,
+            "cached_input": 32.0,
+            "output_reasoning": 213.0,
+            "total": 1602.5
+          },
+          "mtm_masked": {
+            "uncached_input": 772.5,
+            "cached_input": 0.0,
+            "output_reasoning": 118.0,
+            "total": 915.5
+          }
+        },
+        "token_breakdown_mean": {
+          "visible_403": {
+            "uncached_input": 1299.45,
+            "cached_input": 355.2,
+            "output_reasoning": 237.3,
+            "total": 1891.95
+          },
+          "visible_200": {
+            "uncached_input": 1069.2,
+            "cached_input": 265.6,
+            "output_reasoning": 171.55,
+            "total": 1506.35
+          },
+          "mtm_masked": {
+            "uncached_input": 734.2,
+            "cached_input": 60.8,
+            "output_reasoning": 154.95,
+            "total": 949.95
+          }
+        }
+      },
+      "rq3_e2_attention_inertia_ghost_calls": {
+        "k1": 0.0,
+        "k2": 0.0,
+        "k4": 0.0,
+        "k5": 0.0,
+        "k8": 0.0,
+        "k10": 0.0
+      },
+      "rq3_e2_replan_1_rate_pct": {
+        "k1": 85.0,
+        "k2": 95.0,
+        "k4": 100.0,
+        "k5": 85.0,
+        "k8": 100.0,
+        "k10": 100.0
+      },
+      "rq3_e3_fallback_action_space": {
+        "F1_staging": {
+          "safe_staging_pct": 90.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 5.0,
+          "ghost_calls_intercepted_pct": 0.0
+        },
+        "F2_nearmiss": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 45.0,
+          "plain_text_abstention_pct": 50.0,
+          "ghost_calls_intercepted_pct": 0.0
+        },
+        "F3_nofallback": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 65.0,
+          "ghost_calls_intercepted_pct": 0.0
+        }
+      },
+      "rq3_e4_finops_breakeven": {
+        "k1": {
+          "cost_mtm_usd_per_1k": 0.09,
+          "cost_403_usd_per_1k": 0.16,
+          "net_savings_delta_usd_per_1k": 0.07,
+          "catalog_cost_mtm_usd_per_1k": 0.06,
+          "catalog_cost_403_usd_per_1k": 0.1,
+          "catalog_net_savings_delta_usd_per_1k": 0.04,
+          "delta_uncached_tokens": 205.2,
+          "delta_cached_tokens": 445.0,
+          "delta_output_tokens": 81.7
+        },
+        "k2": {
+          "cost_mtm_usd_per_1k": 0.12,
+          "cost_403_usd_per_1k": 0.18,
+          "net_savings_delta_usd_per_1k": 0.06,
+          "catalog_cost_mtm_usd_per_1k": 0.08,
+          "catalog_cost_403_usd_per_1k": 0.12,
+          "catalog_net_savings_delta_usd_per_1k": 0.04,
+          "delta_uncached_tokens": 135.0,
+          "delta_cached_tokens": 518.4,
+          "delta_output_tokens": 79.7
+        },
+        "k4": {
+          "cost_mtm_usd_per_1k": 0.13,
+          "cost_403_usd_per_1k": 0.17,
+          "net_savings_delta_usd_per_1k": 0.04,
+          "catalog_cost_mtm_usd_per_1k": 0.09,
+          "catalog_cost_403_usd_per_1k": 0.11,
+          "catalog_net_savings_delta_usd_per_1k": 0.02,
+          "delta_uncached_tokens": -52.6,
+          "delta_cached_tokens": 928.0,
+          "delta_output_tokens": 67.9
+        },
+        "k5": {
+          "cost_mtm_usd_per_1k": 0.16,
+          "cost_403_usd_per_1k": 0.17,
+          "net_savings_delta_usd_per_1k": 0.01,
+          "catalog_cost_mtm_usd_per_1k": 0.11,
+          "catalog_cost_403_usd_per_1k": 0.11,
+          "catalog_net_savings_delta_usd_per_1k": 0.0,
+          "delta_uncached_tokens": -319.1,
+          "delta_cached_tokens": 915.2,
+          "delta_output_tokens": 54.9
+        },
+        "k8": {
+          "cost_mtm_usd_per_1k": 0.2,
+          "cost_403_usd_per_1k": 0.21,
+          "net_savings_delta_usd_per_1k": 0.01,
+          "catalog_cost_mtm_usd_per_1k": 0.14,
+          "catalog_cost_403_usd_per_1k": 0.13,
+          "catalog_net_savings_delta_usd_per_1k": -0.01,
+          "delta_uncached_tokens": -769.2,
+          "delta_cached_tokens": 1893.8,
+          "delta_output_tokens": 82.4
+        },
+        "k10": {
+          "cost_mtm_usd_per_1k": 0.25,
+          "cost_403_usd_per_1k": 0.27,
+          "net_savings_delta_usd_per_1k": 0.02,
+          "catalog_cost_mtm_usd_per_1k": 0.17,
+          "catalog_cost_403_usd_per_1k": 0.18,
+          "catalog_net_savings_delta_usd_per_1k": 0.01,
+          "delta_uncached_tokens": -638.6,
+          "delta_cached_tokens": 2316.4,
+          "delta_output_tokens": 71.5
+        }
+      }
+    },
+    "xiaomi/mimo-v2.6-flash": {
+      "metadata": {
+        "id": "xiaomi/mimo-v2.6-flash",
+        "name": "MiMo v2.6 Flash",
+        "short": "mimo",
+        "label": "MiMo v2.6 Flash",
+        "provider": "Xiaomi (Cloud API)",
+        "architecture": "Hybrid Reasoning",
+        "rq2": "rq2_batch_ablation_xiaomi_mimo-v2_6-flash_20261101_190140.json",
+        "rq3": "rq3_four_axes_xiaomi_mimo-v2_6-flash_20261101_193910.json"
+      },
+      "rq2_batching": {
+        "elicitation_propensity_pct": {
+          "S0_neutral": 0.0,
+          "S1_transactional": 25.0,
+          "S2_ratelimit": 60.0,
+          "S3_fewshot_parallel": 30.0
+        },
+        "syntactic_order_asr": {
+          "W1_forward_linear_asr": 0.0,
+          "W2_reverse_linear_asr": 65.0,
+          "W3_clean_turn1_parallel_asr": 0.0,
+          "ttcgateway_causal_asr": 0.0
+        }
+      },
+      "rq3_e1_hurdle_matrix": {
+        "replan_1_rate_pct": {
+          "visible_403": 40.0,
+          "visible_200": 55.0,
+          "mtm_masked": 90.0
+        },
+        "token_breakdown_median": {
+          "visible_403": {
+            "uncached_input": 933.5,
+            "cached_input": 45.5,
+            "output_reasoning": 407.5,
+            "total": 1427.5
+          },
+          "mtm_masked": {
+            "uncached_input": 787.0,
+            "cached_input": 27.0,
+            "output_reasoning": 262.0,
+            "total": 1082.0
+          }
+        },
+        "token_breakdown_mean": {
+          "visible_403": {
+            "uncached_input": 1127.75,
+            "cached_input": 342.1,
+            "output_reasoning": 449.05,
+            "total": 1918.9
+          },
+          "visible_200": {
+            "uncached_input": 1033.75,
+            "cached_input": 243.45,
+            "output_reasoning": 339.3,
+            "total": 1616.5
+          },
+          "mtm_masked": {
+            "uncached_input": 747.3,
+            "cached_input": 95.0,
+            "output_reasoning": 311.4,
+            "total": 1153.7
+          }
+        }
+      },
+      "rq3_e2_attention_inertia_ghost_calls": {
+        "k1": 0.0,
+        "k2": 20.0,
+        "k4": 10.0,
+        "k5": 10.0,
+        "k8": 15.0,
+        "k10": 25.0
+      },
+      "rq3_e2_replan_1_rate_pct": {
+        "k1": 65.0,
+        "k2": 70.0,
+        "k4": 80.0,
+        "k5": 85.0,
+        "k8": 75.0,
+        "k10": 70.0
+      },
+      "rq3_e3_fallback_action_space": {
+        "F1_staging": {
+          "safe_staging_pct": 55.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 5.0,
+          "ghost_calls_intercepted_pct": 30.0
+        },
+        "F2_nearmiss": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 20.0,
+          "plain_text_abstention_pct": 25.0,
+          "ghost_calls_intercepted_pct": 35.0
+        },
+        "F3_nofallback": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 40.0,
+          "ghost_calls_intercepted_pct": 50.0
+        }
+      },
+      "rq3_e4_finops_breakeven": {
+        "k1": {
+          "cost_mtm_usd_per_1k": 0.11,
+          "cost_403_usd_per_1k": 0.18,
+          "net_savings_delta_usd_per_1k": 0.07,
+          "catalog_cost_mtm_usd_per_1k": 0.07,
+          "catalog_cost_403_usd_per_1k": 0.11,
+          "catalog_net_savings_delta_usd_per_1k": 0.04,
+          "delta_uncached_tokens": 60.3,
+          "delta_cached_tokens": 464.2,
+          "delta_output_tokens": 135.3
+        },
+        "k2": {
+          "cost_mtm_usd_per_1k": 0.16,
+          "cost_403_usd_per_1k": 0.24,
+          "net_savings_delta_usd_per_1k": 0.08,
+          "catalog_cost_mtm_usd_per_1k": 0.1,
+          "catalog_cost_403_usd_per_1k": 0.15,
+          "catalog_net_savings_delta_usd_per_1k": 0.05,
+          "delta_uncached_tokens": 120.0,
+          "delta_cached_tokens": 392.4,
+          "delta_output_tokens": 138.9
+        },
+        "k4": {
+          "cost_mtm_usd_per_1k": 0.16,
+          "cost_403_usd_per_1k": 0.26,
+          "net_savings_delta_usd_per_1k": 0.1,
+          "catalog_cost_mtm_usd_per_1k": 0.11,
+          "catalog_cost_403_usd_per_1k": 0.16,
+          "catalog_net_savings_delta_usd_per_1k": 0.05,
+          "delta_uncached_tokens": 112.6,
+          "delta_cached_tokens": 621.3,
+          "delta_output_tokens": 164.3
+        },
+        "k5": {
+          "cost_mtm_usd_per_1k": 0.2,
+          "cost_403_usd_per_1k": 0.19,
+          "net_savings_delta_usd_per_1k": -0.01,
+          "catalog_cost_mtm_usd_per_1k": 0.14,
+          "catalog_cost_403_usd_per_1k": 0.13,
+          "catalog_net_savings_delta_usd_per_1k": -0.01,
+          "delta_uncached_tokens": -403.9,
+          "delta_cached_tokens": 1060.3,
+          "delta_output_tokens": 11.1
+        },
+        "k8": {
+          "cost_mtm_usd_per_1k": 0.24,
+          "cost_403_usd_per_1k": 0.25,
+          "net_savings_delta_usd_per_1k": 0.01,
+          "catalog_cost_mtm_usd_per_1k": 0.18,
+          "catalog_cost_403_usd_per_1k": 0.17,
+          "catalog_net_savings_delta_usd_per_1k": -0.01,
+          "delta_uncached_tokens": -541.5,
+          "delta_cached_tokens": 1331.3,
+          "delta_output_tokens": 61.6
+        },
+        "k10": {
+          "cost_mtm_usd_per_1k": 0.27,
+          "cost_403_usd_per_1k": 0.24,
+          "net_savings_delta_usd_per_1k": -0.03,
+          "catalog_cost_mtm_usd_per_1k": 0.21,
+          "catalog_cost_403_usd_per_1k": 0.16,
+          "catalog_net_savings_delta_usd_per_1k": -0.05,
+          "delta_uncached_tokens": -1301.5,
+          "delta_cached_tokens": 2143.7,
+          "delta_output_tokens": 120.2
+        }
+      }
+    },
+    "deepseek/deepseek-v4.1-flash": {
+      "metadata": {
+        "id": "deepseek/deepseek-v4.1-flash",
+        "name": "DeepSeek v4.1 Flash",
+        "short": "deepseek",
+        "label": "DeepSeek v4.1 Flash",
+        "provider": "DeepSeek (Cloud API)",
+        "architecture": "MoE Chat / Reasoning",
+        "rq2": "rq2_batch_ablation_deepseek_deepseek-v4_1-flash_20261102_205251.json",
+        "rq3": "rq3_four_axes_deepseek_deepseek-v4_1-flash_20261102_212200.json"
+      },
+      "rq2_batching": {
+        "elicitation_propensity_pct": {
+          "S0_neutral": 0.0,
+          "S1_transactional": 0.0,
+          "S2_ratelimit": 0.0,
+          "S3_fewshot_parallel": 0.0
+        },
+        "syntactic_order_asr": {
+          "W1_forward_linear_asr": 0.0,
+          "W2_reverse_linear_asr": 0.0,
+          "W3_clean_turn1_parallel_asr": 0.0,
+          "ttcgateway_causal_asr": 0.0
+        }
+      },
+      "rq3_e1_hurdle_matrix": {
+        "replan_1_rate_pct": {
+          "visible_403": 60.0,
+          "visible_200": 65.0,
+          "mtm_masked": 70.0
+        },
+        "token_breakdown_median": {
+          "visible_403": {
+            "uncached_input": 1154.0,
+            "cached_input": 0.0,
+            "output_reasoning": 409.0,
+            "total": 1561.5
+          },
+          "mtm_masked": {
+            "uncached_input": 1033.0,
+            "cached_input": 0.0,
+            "output_reasoning": 547.5,
+            "total": 1585.0
+          }
+        },
+        "token_breakdown_mean": {
+          "visible_403": {
+            "uncached_input": 1172.7,
+            "cached_input": 147.2,
+            "output_reasoning": 508.5,
+            "total": 1828.4
+          },
+          "visible_200": {
+            "uncached_input": 1151.8,
+            "cached_input": 108.8,
+            "output_reasoning": 447.75,
+            "total": 1708.35
+          },
+          "mtm_masked": {
+            "uncached_input": 999.4,
+            "cached_input": 25.6,
+            "output_reasoning": 512.45,
+            "total": 1537.45
+          }
+        }
+      },
+      "rq3_e2_attention_inertia_ghost_calls": {
+        "k1": 0.0,
+        "k2": 0.0,
+        "k4": 0.0,
+        "k5": 0.0,
+        "k8": 0.0,
+        "k10": 0.0
+      },
+      "rq3_e2_replan_1_rate_pct": {
+        "k1": 15.0,
+        "k2": 70.0,
+        "k4": 65.0,
+        "k5": 75.0,
+        "k8": 70.0,
+        "k10": 70.0
+      },
+      "rq3_e3_fallback_action_space": {
+        "F1_staging": {
+          "safe_staging_pct": 70.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 0.0,
+          "ghost_calls_intercepted_pct": 0.0
+        },
+        "F2_nearmiss": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 20.0,
+          "plain_text_abstention_pct": 60.0,
+          "ghost_calls_intercepted_pct": 0.0
+        },
+        "F3_nofallback": {
+          "safe_staging_pct": 0.0,
+          "nearmiss_synonym_pct": 0.0,
+          "plain_text_abstention_pct": 65.0,
+          "ghost_calls_intercepted_pct": 0.0
+        }
+      },
+      "rq3_e4_finops_breakeven": {
+        "k1": {
+          "cost_mtm_usd_per_1k": 0.16,
+          "cost_403_usd_per_1k": 0.17,
+          "net_savings_delta_usd_per_1k": 0.01,
+          "catalog_cost_mtm_usd_per_1k": 0.11,
+          "catalog_cost_403_usd_per_1k": 0.11,
+          "catalog_net_savings_delta_usd_per_1k": 0.0,
+          "delta_uncached_tokens": 29.0,
+          "delta_cached_tokens": 172.8,
+          "delta_output_tokens": 17.1
+        },
+        "k2": {
+          "cost_mtm_usd_per_1k": 0.28,
+          "cost_403_usd_per_1k": 0.29,
+          "net_savings_delta_usd_per_1k": 0.01,
+          "catalog_cost_mtm_usd_per_1k": 0.18,
+          "catalog_cost_403_usd_per_1k": 0.19,
+          "catalog_net_savings_delta_usd_per_1k": 0.01,
+          "delta_uncached_tokens": 153.1,
+          "delta_cached_tokens": 96.0,
+          "delta_output_tokens": -3.9
+        },
+        "k4": {
+          "cost_mtm_usd_per_1k": 0.31,
+          "cost_403_usd_per_1k": 0.28,
+          "net_savings_delta_usd_per_1k": -0.03,
+          "catalog_cost_mtm_usd_per_1k": 0.2,
+          "catalog_cost_403_usd_per_1k": 0.18,
+          "catalog_net_savings_delta_usd_per_1k": -0.02,
+          "delta_uncached_tokens": -217.0,
+          "delta_cached_tokens": 492.8,
+          "delta_output_tokens": -32.6
+        },
+        "k5": {
+          "cost_mtm_usd_per_1k": 0.32,
+          "cost_403_usd_per_1k": 0.32,
+          "net_savings_delta_usd_per_1k": 0.0,
+          "catalog_cost_mtm_usd_per_1k": 0.21,
+          "catalog_cost_403_usd_per_1k": 0.2,
+          "catalog_net_savings_delta_usd_per_1k": -0.01,
+          "delta_uncached_tokens": -508.0,
+          "delta_cached_tokens": 768.0,
+          "delta_output_tokens": 73.8
+        },
+        "k8": {
+          "cost_mtm_usd_per_1k": 0.43,
+          "cost_403_usd_per_1k": 0.29,
+          "net_savings_delta_usd_per_1k": -0.14,
+          "catalog_cost_mtm_usd_per_1k": 0.28,
+          "catalog_cost_403_usd_per_1k": 0.18,
+          "catalog_net_savings_delta_usd_per_1k": -0.1,
+          "delta_uncached_tokens": -1286.5,
+          "delta_cached_tokens": 1651.2,
+          "delta_output_tokens": -143.6
+        },
+        "k10": {
+          "cost_mtm_usd_per_1k": 0.43,
+          "cost_403_usd_per_1k": 0.36,
+          "net_savings_delta_usd_per_1k": -0.07,
+          "catalog_cost_mtm_usd_per_1k": 0.28,
+          "catalog_cost_403_usd_per_1k": 0.23,
+          "catalog_net_savings_delta_usd_per_1k": -0.05,
+          "delta_uncached_tokens": -1003.5,
+          "delta_cached_tokens": 1574.4,
+          "delta_output_tokens": -7.4
+        }
+      }
+    }
+  }
+}
